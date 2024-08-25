@@ -12,7 +12,7 @@ export const CLIENT_ID = import.meta.env.PROD
   ? import.meta.env.VITE_EPIC_PROD_CLIENT_ID
   : import.meta.env.VITE_EPIC_NON_PROD_CLIENT_ID;
 
-export const LS_KEYS = {
+export const COOKIE_KEYS = {
   CODE_VERIFIER: "my-health_code_verifier",
   STATE: "my-health_state",
   ACCESS_TOKEN: "my-health_access_token",

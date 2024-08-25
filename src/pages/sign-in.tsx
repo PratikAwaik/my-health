@@ -1,18 +1,18 @@
 import { Button } from "@/components/ui/button";
 import pkceChallenge from "pkce-challenge";
 import { createRandomString, secondsToDays } from "@/utils/helpers";
-import { getCookie, setCookie } from "@/utils/cookies";
+import { deleteCookie, getCookie, setCookie } from "@/utils/cookies";
 import {
   CLIENT_ID,
   EPIC_FHIR_R4_URL,
   EPIC_SMART_AUTH_URL,
   EPIC_SMART_TOKEN_URL,
-  LS_KEYS,
+  COOKIE_KEYS,
   REDIRECT_URI,
 } from "@/utils/constants";
 import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { fhirApi } from "@/lib/axios";
+import axios from "axios";
 
 export default function SignIn() {
   const [searchParams] = useSearchParams();
@@ -27,12 +27,14 @@ export default function SignIn() {
         getToken(code)
           .then((response) => {
             const expires = secondsToDays(response.expires_in);
-            setCookie(LS_KEYS.ACCESS_TOKEN, response.access_token, {
+            setCookie(COOKIE_KEYS.ACCESS_TOKEN, response.access_token, {
               expires,
             });
-            setCookie(LS_KEYS.PATIENT_ID, response.patient, {
+            setCookie(COOKIE_KEYS.PATIENT_ID, response.patient, {
               expires,
             });
+            deleteCookie(COOKIE_KEYS.CODE_VERIFIER);
+            deleteCookie(COOKIE_KEYS.STATE);
             navigate("/");
           })
           .catch((err) => {
@@ -47,20 +49,20 @@ export default function SignIn() {
   }, [searchParams, navigate]);
 
   const isStateSame = (searchParamState: string) => {
-    const cookieState = getCookie(LS_KEYS.STATE);
+    const cookieState = getCookie(COOKIE_KEYS.STATE);
     return cookieState === searchParamState;
   };
 
   const generateAndSetPkceChallenge = async () => {
     const pkce = await pkceChallenge();
-    setCookie(LS_KEYS.CODE_VERIFIER, pkce.code_verifier);
+    setCookie(COOKIE_KEYS.CODE_VERIFIER, pkce.code_verifier);
     return pkce;
   };
 
   const authorize = async () => {
     const pkce = await generateAndSetPkceChallenge();
     const state = createRandomString();
-    setCookie(LS_KEYS.STATE, state);
+    setCookie(COOKIE_KEYS.STATE, state);
 
     const authUrl = new URL(EPIC_SMART_AUTH_URL);
 
@@ -77,9 +79,9 @@ export default function SignIn() {
   };
 
   const getToken = async (code: string) => {
-    const codeVerifier = getCookie(LS_KEYS.CODE_VERIFIER);
+    const codeVerifier = getCookie(COOKIE_KEYS.CODE_VERIFIER);
 
-    const response = await fhirApi.post(
+    const response = await axios.post(
       EPIC_SMART_TOKEN_URL,
       {
         grant_type: "authorization_code",
