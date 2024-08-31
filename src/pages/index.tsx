@@ -15,8 +15,12 @@ export default function Home() {
   }, [navigate]);
 
   return (
-    <div>
+    <>
       <Navbar />
-    </div>
+      <div className="grid grid-cols-[1fr_2fr] gap-4">
+        <div></div>
+        <div></div>
+      </div>
+    </>
   );
 }
