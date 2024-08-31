@@ -1,4 +1,5 @@
 import { Navbar } from "@/components/navbar";
+import { Sidebar } from "@/components/sidebar";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { useAuth } from "@/hooks/use-auth";
@@ -43,12 +44,12 @@ export default function Home() {
   }
 
   return (
-    <>
+    <div className="flex flex-col gap-y-4">
       <Navbar patient={patient} />
-      <div className="grid grid-cols-[25rem_2fr] gap-4 mt-4">
-        <div></div>
+      <div className="grid grid-cols-[15rem_2fr] gap-4 h-full grow">
+        <Sidebar />
         <div></div>
       </div>
-    </>
+    </div>
   );
 }
