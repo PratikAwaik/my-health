@@ -13,16 +13,19 @@ import {
 import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
+import { useToast } from "@/hooks/use-toast";
 
 export default function SignIn() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   useEffect(() => {
     const state = searchParams.get("state");
     const code = searchParams.get("code");
+    const storedAccessToken = getCookie(COOKIE_KEYS.ACCESS_TOKEN);
 
-    if (state && code) {
+    if (state && code && !storedAccessToken) {
       if (isStateSame(state)) {
         getToken(code)
           .then((response) => {
@@ -35,18 +38,28 @@ export default function SignIn() {
             });
             deleteCookie(COOKIE_KEYS.CODE_VERIFIER);
             deleteCookie(COOKIE_KEYS.STATE);
+            toast({
+              title: "Successfully signed in.",
+            });
             navigate("/");
           })
-          .catch((err) => {
-            console.log(err);
+          .catch(() => {
+            toast({
+              variant: "destructive",
+              title: "Authentication Error",
+              description: "Something went wrong. Please try again.",
+            });
           });
       } else {
-        console.log(
-          "State is different. Your code has been compromised. Please restart the authorization process!"
-        );
+        toast({
+          variant: "destructive",
+          title: "Authentication Error",
+          description:
+            "State is different. Your code has been compromised. Please restart the authorization process!",
+        });
       }
     }
-  }, [searchParams, navigate]);
+  }, [searchParams, navigate, toast]);
 
   const isStateSame = (searchParamState: string) => {
     const cookieState = getCookie(COOKIE_KEYS.STATE);
