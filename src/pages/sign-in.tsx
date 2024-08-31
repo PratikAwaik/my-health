@@ -23,9 +23,9 @@ export default function SignIn() {
   useEffect(() => {
     const state = searchParams.get("state");
     const code = searchParams.get("code");
-    const storedAccessToken = getCookie(COOKIE_KEYS.ACCESS_TOKEN);
+    const access_token = getCookie(COOKIE_KEYS.ACCESS_TOKEN);
 
-    if (state && code && !storedAccessToken) {
+    if (state && code && !access_token) {
       if (isStateSame(state)) {
         getToken(code)
           .then((response) => {
