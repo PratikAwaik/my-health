@@ -1,3 +1,4 @@
+import { Navbar } from "@/components/navbar";
 import { COOKIE_KEYS } from "@/utils/constants";
 import { getCookie } from "@/utils/cookies";
 import { useEffect } from "react";
@@ -13,5 +14,9 @@ export default function Home() {
     }
   }, [navigate]);
 
-  return <div className="text-4xl">Hello</div>;
+  return (
+    <div>
+      <Navbar />
+    </div>
+  );
 }
