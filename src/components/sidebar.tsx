@@ -2,11 +2,11 @@ import { HeartPulse, LogOut, Pill } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
-import { useAuth } from "@/hooks/use-auth";
 import { cn } from "@/lib/utils";
+import { useAuthContext } from "@/hooks/use-auth-context";
 
 export function Sidebar() {
-  const { handleLogout } = useAuth();
+  const { handleLogout } = useAuthContext();
 
   return (
     <Card className="h-full">
