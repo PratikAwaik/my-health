@@ -5,8 +5,9 @@ import { Layout } from "./components/ui/layout";
 import { Toaster } from "./components/ui/toaster";
 
 // pages
-import Home from "./pages";
-import SignIn from "./pages/sign-in";
+import HomePage from "./pages";
+import SignInPage from "./pages/sign-in";
+import MedicationsPage from "./pages/medications";
 
 import "./index.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -17,11 +18,15 @@ const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: <HomePage />,
   },
   {
     path: "/sign-in",
-    element: <SignIn />,
+    element: <SignInPage />,
+  },
+  {
+    path: "/medications",
+    element: <MedicationsPage />,
   },
 ]);
 

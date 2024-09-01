@@ -15,7 +15,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { useToast } from "@/hooks/use-toast";
 
-export default function SignIn() {
+export default function SignInPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { toast } = useToast();

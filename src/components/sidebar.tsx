@@ -1,8 +1,9 @@
-import { HeartPulse, LogOut } from "lucide-react";
+import { HeartPulse, LogOut, Pill } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
 import { useAuth } from "@/hooks/use-auth";
+import { cn } from "@/lib/utils";
 
 export function Sidebar() {
   const { handleLogout } = useAuth();
@@ -18,6 +19,10 @@ export function Sidebar() {
       <CardContent className="flex flex-col gap-y-6 justify-between h-full">
         <div className="flex flex-col gap-y-2">
           <Link to="/medications">Medications</Link>
+          <SidebarLink to="/medications">
+            <Pill className="size-5" />
+            Medications
+          </SidebarLink>
           <Link to="/vitals">Vitals</Link>
           <Link to="/lab-reports">Lab Reports</Link>
         </div>
@@ -29,3 +34,25 @@ export function Sidebar() {
     </Card>
   );
 }
+
+interface SidebarLinkProps {
+  to: string;
+  children: React.ReactNode;
+}
+
+const SidebarLink = ({ to, children }: SidebarLinkProps) => {
+  const location = useLocation();
+  const isActive = location.pathname.includes(to);
+
+  return (
+    <Link
+      to={to}
+      className={cn(
+        "p-2 rounded-md flex items-center gap-x-1.5",
+        isActive && "bg-primary/20"
+      )}
+    >
+      {children}
+    </Link>
+  );
+};
