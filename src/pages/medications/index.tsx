@@ -19,8 +19,6 @@ export default function MedicationsPage() {
     [medicationBundle]
   );
 
-  console.log({ medications });
-
   return (
     <Card>
       <CardHeader className="border-b border-b-primary">

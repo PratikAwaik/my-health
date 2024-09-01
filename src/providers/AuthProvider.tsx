@@ -29,7 +29,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }, [navigate]);
 
   const handleLogout = useCallback(() => {
-    console.log("handleogout");
     deleteCookie(COOKIE_KEYS.ACCESS_TOKEN);
     deleteCookie(COOKIE_KEYS.PATIENT_ID);
     navigate("/sign-in");
