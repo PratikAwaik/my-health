@@ -1,17 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import { PatientService } from "./patient.service";
-import { COOKIE_KEYS } from "@/utils/constants";
-import { getCookie } from "@/utils/cookies";
+import { useAuthContext } from "@/hooks/use-auth-context";
 
 const svc = new PatientService();
 
-const PATIENT_ID = getCookie(COOKIE_KEYS.PATIENT_ID);
-
 export const useGetPatientDetails = () => {
+  const { patientId } = useAuthContext();
   const { data, ...rest } = useQuery({
     queryKey: ["patient"],
-    queryFn: () => svc.getPatientDetails(PATIENT_ID!),
-    enabled: !!PATIENT_ID,
+    queryFn: () => svc.getPatientDetails(patientId!),
+    enabled: !!patientId,
   });
 
   return {
@@ -21,10 +19,11 @@ export const useGetPatientDetails = () => {
 };
 
 export const useGetMedications = () => {
+  const { patientId } = useAuthContext();
   const { data, ...rest } = useQuery({
     queryKey: ["medications"],
-    queryFn: () => svc.getMedications(PATIENT_ID!),
-    enabled: !!PATIENT_ID,
+    queryFn: () => svc.getMedications(patientId!),
+    enabled: !!patientId,
   });
 
   return {
