@@ -12,6 +12,7 @@ import MedicationsPage from "./pages/medications";
 import "./index.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider } from "./providers/AuthProvider";
+import VitalsPage from "./pages/vitals";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -32,6 +33,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <HomePage /> },
       { path: "/medications", element: <MedicationsPage /> },
+      { path: "/vitals", element: <VitalsPage /> },
     ],
   },
   {
