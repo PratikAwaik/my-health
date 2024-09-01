@@ -36,9 +36,9 @@ export function Layout({ children }: LayoutProps) {
 
   return (
     <main className="w-screen h-screen overflow-auto p-6 bg-primary/20">
-      <div className="flex flex-col gap-y-4">
+      <div className="grid grid-rows-[auto_1fr] h-full gap-y-4">
         <Navbar patient={patient} />
-        <div className="grid grid-cols-[15rem_2fr] gap-4 h-full grow">
+        <div className="grid grid-cols-[15rem_2fr] gap-4 h-full">
           <Sidebar />
           {children}
         </div>

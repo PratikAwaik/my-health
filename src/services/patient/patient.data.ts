@@ -5,17 +5,30 @@ import { getCookie } from "@/utils/cookies";
 
 const svc = new PatientService();
 
+const PATIENT_ID = getCookie(COOKIE_KEYS.PATIENT_ID);
+
 export const useGetPatientDetails = () => {
-  const patient_id = getCookie(COOKIE_KEYS.PATIENT_ID);
   const { data, ...rest } = useQuery({
     queryKey: ["patient"],
-    queryFn: () => svc.getPatientDetails(patient_id!),
-    enabled: !!patient_id,
-    // ! throwOnError
+    queryFn: () => svc.getPatientDetails(PATIENT_ID!),
+    enabled: !!PATIENT_ID,
   });
 
   return {
     patient: data?.data,
+    ...rest,
+  };
+};
+
+export const useGetMedications = () => {
+  const { data, ...rest } = useQuery({
+    queryKey: ["medications"],
+    queryFn: () => svc.getMedications(PATIENT_ID!),
+    enabled: !!PATIENT_ID,
+  });
+
+  return {
+    medicationBundle: data?.data,
     ...rest,
   };
 };

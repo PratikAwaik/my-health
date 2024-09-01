@@ -9,14 +9,14 @@ export function Sidebar() {
   const { handleLogout } = useAuthContext();
 
   return (
-    <Card className="h-full">
+    <Card className="h-full flex flex-col">
       <CardHeader>
         <CardTitle className="text-lg font-bold flex items-center gap-x-2 text-primary">
           <HeartPulse />
           My Health
         </CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-col gap-y-6 justify-between h-fit">
+      <CardContent className="flex flex-col gap-y-6 justify-between h-full">
         <div className="flex flex-col gap-y-2">
           <SidebarLink to="/medications">
             <Pill className="size-5" />
@@ -53,8 +53,8 @@ const SidebarLink = ({ to, children }: SidebarLinkProps) => {
     <Link
       to={to}
       className={cn(
-        "p-2 rounded-md flex items-center gap-x-1.5",
-        isActive && "bg-primary/20"
+        "p-2 pl-4 rounded-md flex items-center gap-x-1.5",
+        isActive && "bg-primary/20 text-primary"
       )}
     >
       {children}
