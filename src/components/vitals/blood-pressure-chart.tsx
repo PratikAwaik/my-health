@@ -29,7 +29,7 @@ const chartConfig = {
 export function BloodPressureChart({
   bloodPressureData,
 }: BloodPressureChartProps) {
-  const [timeRange, setTimeRange] = useState("90d");
+  const [timeRange, setTimeRange] = useState("all");
 
   const getSystolicPressure = useCallback(
     (bp: Observation | undefined) =>
