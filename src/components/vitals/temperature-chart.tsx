@@ -6,27 +6,27 @@ import { format } from "date-fns";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "../ui/chart";
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
 
-interface HeightChartProps {
-  heightData: Array<Observation | undefined>;
+interface TemperatureChartProps {
+  temperatureData: Array<Observation | undefined>;
 }
 
 const chartConfig = {
-  height: {
-    label: "Height",
+  temperature: {
+    label: "Temperature",
     color: "hsl(var(--chart-1))",
   },
 };
 
-export function HeightChart({ heightData }: HeightChartProps) {
+export function TemperatureChart({ temperatureData }: TemperatureChartProps) {
   const [timeRange, setTimeRange] = useState("all");
 
   const chartData = useMemo(
     () =>
-      heightData.map((data) => ({
+      temperatureData.map((data) => ({
         day: format(new Date(data?.effectiveDateTime || ""), "do MMM yyyy"),
-        height: data?.valueQuantity?.value,
+        temperature: data?.valueQuantity?.value,
       })),
-    [heightData]
+    [temperatureData]
   );
 
   const filteredData = useMemo(
@@ -51,7 +51,7 @@ export function HeightChart({ heightData }: HeightChartProps) {
     <Card>
       <CardHeader>
         <div className="w-full flex items-center justify-between">
-          <CardTitle className="text-primary text-xl">Height</CardTitle>
+          <CardTitle className="text-primary text-xl">Temperature</CardTitle>
           <TimeRangeSelect timeRange={timeRange} setTimeRange={setTimeRange} />
         </div>
       </CardHeader>
@@ -76,9 +76,9 @@ export function HeightChart({ heightData }: HeightChartProps) {
               />
               <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
               <Line
-                dataKey="height"
+                dataKey="temperature"
                 type="linear"
-                stroke="var(--color-height)"
+                stroke="var(--color-temperature)"
                 strokeWidth={2}
               />
             </LineChart>
