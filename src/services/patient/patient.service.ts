@@ -1,5 +1,5 @@
 import { fhirApi } from "@/lib/axios";
-import { Bundle, MedicationRequest, Patient } from "fhir/r4";
+import { Bundle, MedicationRequest, Observation, Patient } from "fhir/r4";
 
 export class PatientService {
   async getPatientDetails(patient_id: string) {
@@ -9,6 +9,12 @@ export class PatientService {
   async getMedications(patient_id: string) {
     return fhirApi.get<Bundle<MedicationRequest>>(
       `/MedicationRequest?subject=${patient_id}`
+    );
+  }
+
+  async getObservations(patient_id: string) {
+    return fhirApi.get<Bundle<Observation>>(
+      `/Observation?subject=${patient_id}&category=vital-signs`
     );
   }
 }

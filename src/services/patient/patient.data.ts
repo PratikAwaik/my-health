@@ -31,3 +31,17 @@ export const useGetMedications = () => {
     ...rest,
   };
 };
+
+export const useGetObservations = () => {
+  const { patientId } = useAuthContext();
+  const { data, ...rest } = useQuery({
+    queryKey: ["observations"],
+    queryFn: () => svc.getObservations(patientId!),
+    enabled: !!patientId,
+  });
+
+  return {
+    observationBundle: data?.data,
+    ...rest,
+  };
+};
