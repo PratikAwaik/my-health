@@ -6,27 +6,27 @@ import { format } from "date-fns";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "../ui/chart";
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
 
-interface WeightChartProps {
-  weightData: Array<Observation | undefined>;
+interface HeightChartProps {
+  heightData: Array<Observation | undefined>;
 }
 
 const chartConfig = {
-  weight: {
-    label: "Weight",
+  height: {
+    label: "Height",
     color: "hsl(var(--chart-1))",
   },
 };
 
-export function WeightChart({ weightData }: WeightChartProps) {
+export function HeightChart({ heightData }: HeightChartProps) {
   const [timeRange, setTimeRange] = useState("all");
 
   const chartData = useMemo(
     () =>
-      weightData.map((data) => ({
+      heightData.map((data) => ({
         day: format(new Date(data?.effectiveDateTime || ""), "do MMM yyyy"),
-        weight: data?.valueQuantity?.value,
+        height: data?.valueQuantity?.value,
       })),
-    [weightData]
+    [heightData]
   );
 
   const filteredData = useMemo(
@@ -46,12 +46,13 @@ export function WeightChart({ weightData }: WeightChartProps) {
       }),
     [chartData, timeRange]
   );
+  console.log({ chartData });
 
   return (
     <Card>
       <CardHeader>
         <div className="w-full flex items-center justify-between">
-          <CardTitle className="text-primary text-xl">Weight</CardTitle>
+          <CardTitle className="text-primary text-xl">Height</CardTitle>
           <TimeRangeSelect timeRange={timeRange} setTimeRange={setTimeRange} />
         </div>
       </CardHeader>
@@ -64,6 +65,7 @@ export function WeightChart({ weightData }: WeightChartProps) {
               margin={{
                 left: 12,
                 right: 12,
+                top: 12,
               }}
             >
               <CartesianGrid vertical={false} />
@@ -75,9 +77,9 @@ export function WeightChart({ weightData }: WeightChartProps) {
               />
               <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
               <Line
-                dataKey="weight"
+                dataKey="height"
                 type="linear"
-                stroke="var(--color-weight)"
+                stroke="var(--color-height)"
                 strokeWidth={2}
               />
             </LineChart>

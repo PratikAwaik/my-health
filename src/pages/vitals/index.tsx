@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BloodPressureChart } from "@/components/vitals/blood-pressure-chart";
 import { HeartRateChart } from "@/components/vitals/heart-rate-chart";
+import { HeightChart } from "@/components/vitals/height-chart";
 import { WeightChart } from "@/components/vitals/weight-chart";
 import { useGetObservations } from "@/services/patient/patient.data";
 import { Activity } from "lucide-react";
@@ -49,6 +50,7 @@ export default function VitalsPage() {
         <BloodPressureChart bloodPressureData={observations.bloodPressure} />
         <HeartRateChart heartRateData={observations.heartRate} />
         <WeightChart weightData={observations.weight} />
+        <HeightChart heightData={observations.height} />
       </CardContent>
     </Card>
   );
