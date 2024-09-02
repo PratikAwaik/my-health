@@ -85,36 +85,42 @@ export function BloodPressureChart({
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="h-80 w-full">
-          <LineChart
-            accessibilityLayer
-            data={filteredData}
-            margin={{
-              left: 12,
-              right: 12,
-            }}
-          >
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="day"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-            />
-            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-            <Line
-              dataKey="systolic"
-              type="linear"
-              stroke="var(--color-systolic)"
-              strokeWidth={2}
-            />
-            <Line
-              dataKey="diastolic"
-              type="linear"
-              stroke="var(--color-diastolic)"
-              strokeWidth={2}
-            />
-            <Legend verticalAlign="top" height={36} />
-          </LineChart>
+          {filteredData.length > 0 ? (
+            <LineChart
+              accessibilityLayer
+              data={filteredData}
+              margin={{
+                left: 12,
+                right: 12,
+              }}
+            >
+              <CartesianGrid vertical={false} />
+              <XAxis
+                dataKey="day"
+                tickLine={false}
+                axisLine={false}
+                tickMargin={8}
+              />
+              <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+              <Line
+                dataKey="systolic"
+                type="linear"
+                stroke="var(--color-systolic)"
+                strokeWidth={2}
+              />
+              <Line
+                dataKey="diastolic"
+                type="linear"
+                stroke="var(--color-diastolic)"
+                strokeWidth={2}
+              />
+              <Legend verticalAlign="top" height={36} />
+            </LineChart>
+          ) : (
+            <div className="w-full h-full flex items-center justify-center">
+              <p className="text-xl font-medium">No data found!</p>
+            </div>
+          )}
         </ChartContainer>
       </CardContent>
     </Card>
