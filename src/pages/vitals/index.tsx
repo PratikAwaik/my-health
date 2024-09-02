@@ -7,9 +7,10 @@ import { WeightChart } from "@/components/vitals/weight-chart";
 import { useGetObservations } from "@/services/patient/patient.data";
 import { Activity } from "lucide-react";
 import { useCallback, useMemo } from "react";
+import { VitalsPageLoading } from "./loading";
 
 export default function VitalsPage() {
-  const { observationBundle } = useGetObservations();
+  const { observationBundle, isLoading } = useGetObservations();
 
   const observationsData = useMemo(
     () =>
@@ -48,11 +49,19 @@ export default function VitalsPage() {
         </CardTitle>
       </CardHeader>
       <CardContent className="pt-6 flex flex-col gap-y-4">
-        <BloodPressureChart bloodPressureData={observations.bloodPressure} />
-        <HeartRateChart heartRateData={observations.heartRate} />
-        <WeightChart weightData={observations.weight} />
-        <HeightChart heightData={observations.height} />
-        <TemperatureChart temperatureData={observations.temperature} />
+        {isLoading ? (
+          <VitalsPageLoading />
+        ) : (
+          <>
+            <BloodPressureChart
+              bloodPressureData={observations.bloodPressure}
+            />
+            <HeartRateChart heartRateData={observations.heartRate} />
+            <WeightChart weightData={observations.weight} />
+            <HeightChart heightData={observations.height} />
+            <TemperatureChart temperatureData={observations.temperature} />
+          </>
+        )}
       </CardContent>
     </Card>
   );
