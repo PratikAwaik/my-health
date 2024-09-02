@@ -45,3 +45,17 @@ export const useGetObservations = () => {
     ...rest,
   };
 };
+
+export const useGetLabReports = () => {
+  const { patientId } = useAuthContext();
+  const { data, ...rest } = useQuery({
+    queryKey: ["lab-reports"],
+    queryFn: () => svc.getLabReports(patientId!),
+    enabled: !!patientId,
+  });
+
+  return {
+    labReportsBundle: data?.data,
+    ...rest,
+  };
+};

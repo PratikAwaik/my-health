@@ -17,4 +17,10 @@ export class PatientService {
       `/Observation?subject=${patient_id}&category=vital-signs`
     );
   }
+
+  async getLabReports(patient_id: string) {
+    return fhirApi.get<Bundle<Observation>>(
+      `/Observation?subject=${patient_id}&category=laboratory`
+    );
+  }
 }
