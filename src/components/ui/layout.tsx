@@ -4,6 +4,9 @@ import { Sidebar } from "../sidebar";
 import { useGetPatientDetails } from "@/services/patient/patient.data";
 import { Spinner } from "./spinner";
 import { Button } from "./button";
+import { useMemo } from "react";
+import { useLocation } from "react-router-dom";
+import { cn } from "@/lib/utils";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -12,6 +15,11 @@ interface LayoutProps {
 export function Layout({ children }: LayoutProps) {
   const { handleLogout } = useAuthContext();
   const { patient, isLoading: isPatientLoading } = useGetPatientDetails();
+  const location = useLocation();
+  const hideSideAndNav = useMemo(
+    () => location.pathname.includes("/profile"),
+    [location.pathname]
+  );
 
   if (isPatientLoading) {
     return (
@@ -37,9 +45,14 @@ export function Layout({ children }: LayoutProps) {
   return (
     <main className="w-screen h-screen overflow-auto p-6 bg-primary/20">
       <div className="grid grid-rows-[auto_1fr] h-full gap-y-4">
-        <Navbar patient={patient} />
-        <div className="grid grid-cols-[15rem_2fr] gap-4 h-full overflow-hidden">
-          <Sidebar />
+        {!hideSideAndNav && <Navbar patient={patient} />}
+        <div
+          className={cn(
+            "grid grid-cols-[15rem_2fr] gap-4 h-full overflow-hidden",
+            hideSideAndNav && "grid-cols-1"
+          )}
+        >
+          {!hideSideAndNav && <Sidebar />}
           <div className="h-full overflow-auto">{children}</div>
         </div>
       </div>

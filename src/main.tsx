@@ -14,6 +14,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider } from "./providers/AuthProvider";
 import VitalsPage from "./pages/vitals";
 import LabReportsPage from "./pages/lab-reports";
+import ProfilePage from "./pages/profile";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -36,6 +37,7 @@ const router = createBrowserRouter([
       { path: "/medications", element: <MedicationsPage /> },
       { path: "/vitals", element: <VitalsPage /> },
       { path: "/lab-reports", element: <LabReportsPage /> },
+      { path: "/profile", element: <ProfilePage /> },
     ],
   },
   {

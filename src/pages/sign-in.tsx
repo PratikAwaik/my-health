@@ -14,6 +14,7 @@ import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { useToast } from "@/hooks/use-toast";
+import { HeartPulse } from "lucide-react";
 
 export default function SignInPage() {
   const [searchParams] = useSearchParams();
@@ -41,7 +42,7 @@ export default function SignInPage() {
             toast({
               title: "Successfully signed in.",
             });
-            navigate("/");
+            navigate("/medications");
           })
           .catch(() => {
             toast({
@@ -114,8 +115,55 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="w-full h-full flex items-center justify-center">
-      <Button onClick={authorize}>Sign In with EPIC</Button>
+    <div className="w-screen h-screen">
+      <div className="flex items-center w-full h-full">
+        <div className="bg-primary/20 h-full w-1/2 flex items-center justify-center p-2">
+          <div className="flex flex-col gap-y-6 items-center max-w-md">
+            <div className="flex flex-col gap-y-2 items-center">
+              <h1 className="text-2xl text-primary font-semibold flex items-center gap-x-2">
+                <HeartPulse /> My Health
+              </h1>
+              <p className="text-gray-500 text-center">
+                Access your medical records, manage appointments, and connect
+                with your healthcare providers all in one place
+              </p>
+            </div>
+            <div className="flex flex-col gap-y-2">
+              <h3 className="text-lg font-semibold">Benefits:</h3>
+              <ul className="text-gray-500 list-disc">
+                <li>
+                  <span className="font-semibold">
+                    Simple and Secure Access:
+                  </span>{" "}
+                  Sign in with your EPIC account to securely access your health
+                  records and manage your care.
+                </li>
+                <li>
+                  <span className="font-semibold">24/7 Availability:</span> Your
+                  health information is available to you whenever you need it,
+                  from any device.
+                </li>
+                <li>
+                  <span className="font-semibold">Connect with Care:</span>{" "}
+                  Easily communicate with your healthcare team and manage your
+                  appointments online.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div className="bg-white h-full w-1/2 flex items-center justify-center p-2">
+          <div className="flex flex-col gap-y-2 items-center">
+            <h3 className="text-xl text-primary font-semibold">
+              Welcome to My Health
+            </h3>
+            <p className="text-gray-500">
+              Your personal health information at your fingertips.
+            </p>
+            <Button onClick={authorize}>Sign In with EPIC</Button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
