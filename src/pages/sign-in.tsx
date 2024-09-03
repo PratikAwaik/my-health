@@ -13,13 +13,12 @@ import {
 import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
-import { useToast } from "@/hooks/use-toast";
 import { HeartPulse } from "lucide-react";
+import toast from "react-hot-toast";
 
 export default function SignInPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { toast } = useToast();
 
   useEffect(() => {
     const state = searchParams.get("state");
@@ -39,28 +38,19 @@ export default function SignInPage() {
             });
             deleteCookie(COOKIE_KEYS.CODE_VERIFIER);
             deleteCookie(COOKIE_KEYS.STATE);
-            toast({
-              title: "Successfully signed in.",
-            });
+            toast.success("Successfully signed in.");
             navigate("/medications");
           })
           .catch(() => {
-            toast({
-              variant: "destructive",
-              title: "Authentication Error",
-              description: "Something went wrong. Please try again.",
-            });
+            toast.error("Something went wrong. Please try again.");
           });
       } else {
-        toast({
-          variant: "destructive",
-          title: "Authentication Error",
-          description:
-            "State is different. Your code has been compromised. Please restart the authorization process!",
-        });
+        toast.error(
+          "State is different. Your code has been compromised. Please restart the authorization process!"
+        );
       }
     }
-  }, [searchParams, navigate, toast]);
+  }, [searchParams, navigate]);
 
   const isStateSame = (searchParamState: string) => {
     const cookieState = getCookie(COOKIE_KEYS.STATE);

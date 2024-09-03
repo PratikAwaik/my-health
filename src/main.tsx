@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import { Layout } from "./components/ui/layout";
-import { Toaster } from "./components/ui/toaster";
+import { Toaster } from "react-hot-toast";
 
 // pages
 import HomePage from "./pages";
