@@ -4,9 +4,10 @@ import { format } from "date-fns";
 import { Observation } from "fhir/r4";
 import { Calendar, FlaskConical, TestTubeDiagonal } from "lucide-react";
 import { useCallback, useMemo } from "react";
+import { LabReportsLoading } from "./loading";
 
 export default function LabReportsPage() {
-  const { labReportsBundle } = useGetLabReports();
+  const { labReportsBundle, isLoading } = useGetLabReports();
 
   const labReportsData = useMemo(
     () =>
@@ -60,30 +61,41 @@ export default function LabReportsPage() {
         </CardTitle>
       </CardHeader>
       <CardContent className="pt-6">
-        {labReportsData?.map((report, idx) => (
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-primary text-xl">
-                {idx + 1}. {report?.code.text}
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="flex flex-col gap-y-2">
-              <div className="flex items-center gap-x-2 text-primary font-bold">
-                <TestTubeDiagonal className="size-4" />
-                {getValue(report)}
-              </div>
-              <div>
-                {!!report?.effectiveDateTime && (
-                  <div className="flex items-center gap-x-2 text-sm">
-                    <Calendar className="size-4" />
-                    <p className="font-medium text-gray-500">Performed on:</p>
-                    {format(new Date(report.effectiveDateTime), "do MMM yyyy")}
-                  </div>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+        {isLoading ? (
+          <LabReportsLoading />
+        ) : (labReportsData || [])?.length > 0 ? (
+          labReportsData?.map((report, idx) => (
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-primary text-xl">
+                  {idx + 1}. {report?.code.text}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="flex flex-col gap-y-2">
+                <div className="flex items-center gap-x-2 text-primary font-bold">
+                  <TestTubeDiagonal className="size-4" />
+                  {getValue(report)}
+                </div>
+                <div>
+                  {!!report?.effectiveDateTime && (
+                    <div className="flex items-center gap-x-2 text-sm">
+                      <Calendar className="size-4" />
+                      <p className="font-medium text-gray-500">Performed on:</p>
+                      {format(
+                        new Date(report.effectiveDateTime),
+                        "do MMM yyyy"
+                      )}
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          ))
+        ) : (
+          <div className="w-full h-full flex items-center justify-center">
+            <p className="text-xl font-medium">No data found!</p>
+          </div>
+        )}
       </CardContent>
     </Card>
   );

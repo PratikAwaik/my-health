@@ -33,18 +33,6 @@ export function Navbar({ patient }: NavbarProps) {
     }
   }, [patient]);
 
-  // const nameInitials = useMemo(() => {
-  //   if (patientName) {
-  //     const split = patientName.split(" ");
-  //     let initials = "";
-  //     const [firstName, middleName, lastName] = split;
-  //     if (firstName) initials += firstName.substring(0, 1);
-  //     if (lastName) initials += lastName.substring(0, 1);
-  //     else if (middleName) initials += middleName.substring(0, 1);
-  //     return initials;
-  //   }
-  // }, [patientName]);
-
   return (
     <Card>
       <CardHeader className="w-full flex flex-row items-center justify-between gap-x-4 flex-wrap px-4 py-3 space-y-0">
@@ -65,7 +53,7 @@ export function Navbar({ patient }: NavbarProps) {
             </Badge>
             {!!patient.birthDate && (
               <Badge variant="secondary" className="text-sm">
-                {format(new Date(patient.birthDate), "do MMM yyyy")}
+                Birth Date: {format(new Date(patient.birthDate), "do MMM yyyy")}
               </Badge>
             )}
           </div>
