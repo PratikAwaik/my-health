@@ -6,7 +6,6 @@ export const fhirApi = axios.create({
   baseURL: EPIC_FHIR_R4_URL,
   headers: {
     "Content-Type": "application/fhir+json",
-    Authorization: `Bearer ${getCookie(COOKIE_KEYS.ACCESS_TOKEN)}`,
   },
 });
 
